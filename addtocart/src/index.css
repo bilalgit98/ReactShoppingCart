@@ -15,6 +15,26 @@ body {
 a{
   text-decoration: none;
 }
+
+img.small{
+  max-height: 8rem;
+  width : 100%;
+}
+
+.card {
+  background-color: white;
+  padding: 1rem;
+  margin: 0.5rem;
+}
+
+button{
+  padding: 0.3rem;
+  border: 0.1rem #404040 solid;
+  background-color: #f0c040;
+  width: 100%;
+  cursor: pointer;
+}
+
 .row{
   display: flex;
   flex-wrap: wrap;
