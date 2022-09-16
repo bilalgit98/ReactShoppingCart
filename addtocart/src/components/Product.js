@@ -1,7 +1,7 @@
 import React from "react";
 
 const Product = (props) => {
-  const { product } = props;
+  const { item, product, onAdd, onRemove } = props;
 
   return (
     <div className="card">
@@ -9,7 +9,19 @@ const Product = (props) => {
       <h3>{product.name}</h3>
       <div>£{product.price}</div>
       <div>
-        <button>Add To Cart!</button>
+        {item ? (
+          <div>
+            <button onClick={() => onRemove(item)} className="remove">
+              -
+            </button>
+            <span className="p-1">{item.qty}</span>
+            <button onClick={() => onAdd(item)} className="add">
+              +
+            </button>
+          </div>
+        ) : (
+          <button onClick={() => onAdd(product)}>Add To Cart!</button>
+        )}
       </div>
     </div>
   );
