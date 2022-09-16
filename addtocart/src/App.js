@@ -40,7 +40,7 @@ function App() {
           onRemove={onRemove}
           products={products}
         />
-        <Basket />
+        <Basket cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} />
       </div>
     </div>
   );
