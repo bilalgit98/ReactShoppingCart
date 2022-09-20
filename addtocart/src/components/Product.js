@@ -1,6 +1,10 @@
-import React from 'react';
+import { useContext } from 'react';
+import { ShoppingCartContext } from '../context/ShoppingCartProvider';
 
-const Product = ({ item, item: {image, name, price}, itemInCart, addItem, removeItem }) => {
+const Product = ({ item, item: { image, name, price }, itemInCart }) => {
+  const shoppingCartContext = useContext(ShoppingCartContext);
+  const { addItem, removeItem } = shoppingCartContext;
+
   return (
     <div className='card'>
       <img className='small' src={image} alt={name} />

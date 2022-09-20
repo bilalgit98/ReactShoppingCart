@@ -1,7 +1,9 @@
-import React from 'react';
+import { useContext } from 'react';
+import { ShoppingCartContext } from '../context/ShoppingCartProvider';
 
-const Basket = ({ items, addItem, removeItem }) => {
-  console.log('Basket', { items });
+const Basket = () => {
+  const shoppingCartContext = useContext(ShoppingCartContext);
+  const { items, addItem, removeItem } = shoppingCartContext;
 
   const itemsPrice = items.reduce((a, c) => a + c.quantity * c.price, 0);
   const shippingPrice = itemsPrice > 100 ? 0 : 20;
