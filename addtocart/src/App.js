@@ -1,48 +1,48 @@
-import { useState } from "react";
-import Header from "./components/Header";
-import Main from "./components/Main";
-import Basket from "./components/Basket";
-import data from "./data";
+import { useState, createContext } from 'react';
+
+import Header from './components/Header';
+import Main from './components/Main';
+import Basket from './components/Basket';
+import products from './data/products';
+
+// better thank making multiple API calls
+// consumed in Main.js, line:7
+export const ProductsContext = createContext();
+
 function App() {
-  const [cartItems, setCartItems] = useState([]);
-  const onAdd = (products) => {
-    const exist = cartItems.find((x) => x.id === products.id);
-    if (exist) {
-      const newCartItems = cartItems.map((x) =>
-        x.id === products.id ? { ...exist, qty: exist.qty + 1 } : x
-      );
-      setCartItems(newCartItems);
+  const [items, setItems] = useState([]);
+
+  const addItem = item => {
+    const inCart = items.some(x => x.id === item.id);
+    if (inCart) {
+      const updated = items.map(x => (x.id === item.id ? { ...x, quantity: x.quantity + 1 } : x));
+      setItems(updated);
     } else {
-      const newCartItems = [...cartItems, { ...products, qty: 1 }];
-      setCartItems(newCartItems);
+      setItems([...items, { ...item, quantity: 1 }]);
     }
   };
-  const onRemove = (products) => {
-    const exist = cartItems.find((x) => x.id === products.id);
-    if (exist.qty === 1) {
-      const newCartItems = cartItems.filter((x) => x.id !== products.id);
-      setCartItems(newCartItems);
+
+  const removeItem = item => {
+    const inCartItem = items.find(x => x.id === item.id);
+    if (inCartItem.quantity === 1) {
+      const updated = items.filter(x => x.id !== item.id);
+      setItems(updated);
     } else {
-      const newCartItems = cartItems.map((x) =>
-        x.id === products.id ? { ...exist, qty: exist.qty - 1 } : x
-      );
-      setCartItems(newCartItems);
+      const updated = items.map(x => (x.id === item.id ? { ...x, quantity: x.quantity - 1 } : x));
+      setItems(updated);
     }
   };
-  const { products } = data;
+
   return (
-    <div>
-      <Header countCartItems={cartItems.length} />
-      <div className="row">
-        <Main
-          cartItems={cartItems}
-          onAdd={onAdd}
-          onRemove={onRemove}
-          products={products}
-        />
-        <Basket cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} />
+    <ProductsContext.Provider value={products}>
+      <div className='App'>
+        <Header countCartItems={items.length}></Header>
+        <div className='row'>
+          <Main items={items} addItem={addItem} removeItem={removeItem}></Main>
+          <Basket items={items} addItem={addItem} removeItem={removeItem}></Basket>
+        </div>
       </div>
-    </div>
+    </ProductsContext.Provider>
   );
 }
 
