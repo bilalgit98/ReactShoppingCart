@@ -5,6 +5,8 @@ export const ShoppingCartContext = createContext();
 
 const ShoppingCartProvider = (props) => {
   const [items, setItems] = useState([]);
+
+  //state used to fetch products
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
