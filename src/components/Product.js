@@ -1,9 +1,14 @@
 import { useContext } from "react";
 import { ShoppingCartContext } from "../context/ShoppingCartProvider";
+import { cartProviderContext } from "../context/cartProvide";
 
-const Product = ({ item, item: { image, title, price }, itemInCart }) => {
+const Product = (itemInCart) => {
   const shoppingCartContext = useContext(ShoppingCartContext);
   const { addItem, removeItem } = shoppingCartContext;
+  const {
+    item,
+    item: { image, title, price },
+  } = cartProviderContext;
 
   return (
     <div className="card">
