@@ -1,14 +1,8 @@
 import { useContext } from "react";
-import { ShoppingCartContext } from "../context/ShoppingCartProvider";
-import { cartProviderContext } from "../context/cartProvide";
+import { ShoppingCartContext } from "../context/ShoppingCartContext";
 
-const Product = (itemInCart) => {
-  const shoppingCartContext = useContext(ShoppingCartContext);
-  const { addItem, removeItem } = shoppingCartContext;
-  const {
-    item,
-    item: { image, title, price },
-  } = cartProviderContext;
+const Product = ({ item, item: { title, price, image }, itemInCart }) => {
+  const { addItem, removeItem } = useContext(ShoppingCartContext);
 
   return (
     <div className="card">
@@ -21,7 +15,7 @@ const Product = (itemInCart) => {
             <button onClick={() => removeItem(item)} className="remove">
               -
             </button>
-            <span className="p-1">{item.qty}</span>
+            <span className="p-1">{itemInCart.quantity}</span>
             <button onClick={() => addItem(item)} className="add">
               +
             </button>
@@ -33,5 +27,4 @@ const Product = (itemInCart) => {
     </div>
   );
 };
-
 export default Product;
